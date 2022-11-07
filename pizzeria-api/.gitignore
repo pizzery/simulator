@@ -1,0 +1,20 @@
+# gradle
+.gradle
+**/build/
+!src/**/build/
+/bin/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+.gradletasknamecache
+.project
+.classpath
+
+# Intellij IDEA
+.idea
+/out/
+
+# packages
+*.jar
+*.war
+*.ear
