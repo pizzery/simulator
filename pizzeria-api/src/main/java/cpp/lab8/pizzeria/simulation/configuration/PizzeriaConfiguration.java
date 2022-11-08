@@ -16,6 +16,7 @@ public class PizzeriaConfiguration {
     @Getter
     private int cashRegisters;
     // amount of cooks
+    @Getter
     private int cooks;
     // least cooking time in seconds
     private int minCookingTime;
