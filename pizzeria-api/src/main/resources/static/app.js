@@ -31,7 +31,7 @@ function connectUC() {
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/customer/update', function (customer) {
+        stompClient.subscribe('/topic', function (customer) {
             showCustomer(JSON.parse(customer.body));
         });
     });
@@ -55,7 +55,7 @@ function sendRequest() {
 }
 
 function showCustomer(customer) {
-    $("#customers").append("<tr><td>" + customer.id + "</td><td>" + customer.orderId + "</td></tr>");
+    $("#customers").append("<tr><td>" + customer.pizzas + "</td><td>" + customer.customerId + "</td></tr>");
 }
 
 $(function () {
