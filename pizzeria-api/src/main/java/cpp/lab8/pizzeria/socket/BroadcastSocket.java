@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
+import cpp.lab8.pizzeria.simulation.DTO.OrderDTO;
+
 @Component
 public class BroadcastSocket {
     private final SimpMessagingTemplate template;
@@ -13,15 +15,7 @@ public class BroadcastSocket {
         this.template = template;
     }
 
-    private void broadcast(String path, Object entity) {
-        this.template.convertAndSend(path, entity);
-    }
-
-    public void broadcastNew(String entityName, Object entity) {
-        broadcast("/topic/" + entityName + "/new", entity);
-    }
-
-    public void broadcastUpdate(String entityName, Object entity) {
-        broadcast("/topic/" + entityName + "/update", entity);
+    public void broadcast(OrderDTO dto) {
+        this.template.convertAndSend("/topic", dto);
     }
 }

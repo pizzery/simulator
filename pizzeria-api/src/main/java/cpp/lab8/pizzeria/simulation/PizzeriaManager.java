@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import cpp.lab8.pizzeria.simulation.configuration.PizzeriaConfiguration;
 import cpp.lab8.pizzeria.simulation.customer.CustomerSystem;
-import cpp.lab8.pizzeria.simulation.order.Order;
 import cpp.lab8.pizzeria.simulation.order.OrderSystem;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,10 +16,10 @@ import lombok.Setter;
  */
 @Service
 @Scope("singleton")
+@Getter
+@Setter
 public class PizzeriaManager {
     // current configuration
-    @Getter
-    @Setter
     private PizzeriaConfiguration configuration;
 
     // all subsystems
@@ -36,10 +35,5 @@ public class PizzeriaManager {
     // TODO: start workflow with current configuration
     public void start() {
         customerSystem.startGeneration(configuration.getVisitorsTimeout());
-    }
-
-    public void createOrderForCustomer(int customerId) {
-        Order order = orderSystem.createOrder();
-        customerSystem.assignOrder(customerId, order);
     }
 }

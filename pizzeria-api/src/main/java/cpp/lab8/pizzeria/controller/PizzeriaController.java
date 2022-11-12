@@ -2,7 +2,6 @@ package cpp.lab8.pizzeria.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,12 +23,7 @@ public class PizzeriaController {
 
     @GetMapping("/start")
     public void start() {
-        // TODO: perform checks before starting
+        // TODO: perform checks for configuration before starting
         manager.start();
-    }
-
-    @PostMapping("/order") 
-    public void createOrder(int customerId) {
-        manager.createOrderForCustomer(customerId);
     }
 }
