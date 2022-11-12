@@ -37,6 +37,7 @@ public class DataTransferManager {
      */
     public void sendEntity(Object entity) {
         Optional<OrderDTO> dto = prepareDTOFromEntity(entity);
+        System.out.println(dto);
         if (dto.isPresent()) broadcastSocket.broadcast(dto.get());
     }
 
@@ -49,6 +50,7 @@ public class DataTransferManager {
         // prepare currently relevant systems
         OrderSystem os = pizzeriaManager.getOrderSystem();
         CustomerSystem cs = pizzeriaManager.getCustomerSystem();
+        // TODO: consider other systems
 
         // get order object from entity to work with it further
         Order order;
@@ -57,21 +59,27 @@ public class DataTransferManager {
             else if (entity instanceof Customer) order = os.getOrderById(((Customer)entity).getOrderId());
             // TODO: consider other systems
             else throw new NullPointerException();
-
-            List<PizzaDTO> pizzas = new ArrayList<>();
-            // TODO: build pizza DTO list
-
-            // build final object
-            OrderDTOBuilder orderBuilder = OrderDTO.builder()
-                .orderId(order.getId())
-                .customerId(cs.getCustomerByOrderId(order.getId()).getId())
-                .queueId(null)    // TODO: get current queue of pizza using Queue system
-                .state(null)        // TODO: get current state of pizza using Cook system
-                .pizzas(pizzas);
-            return Optional.of(orderBuilder.build());
         } catch (NullPointerException npe) {
             npe.printStackTrace();
             return Optional.ofNullable(null);
         }
+
+        // collect pizzas
+        List<PizzaDTO> pizzas = new ArrayList<>();
+        // TODO: build pizza DTO list
+
+        // get other entities from order
+        Customer customer = cs.getCustomerByOrderId(order.getId());
+        // TODO: consider other entities
+
+        // build final object
+        OrderDTOBuilder orderBuilder = OrderDTO.builder()
+            .orderId(order.getId())
+            .customerId(customer == null ? null : customer.getId())
+            .queueId(null)    // TODO: get current queue of pizza using Queue system
+            .state(null)        // TODO: get current state of pizza using Cook system
+            .pizzas(pizzas);
+
+        return Optional.of(orderBuilder.build());
     }
 }

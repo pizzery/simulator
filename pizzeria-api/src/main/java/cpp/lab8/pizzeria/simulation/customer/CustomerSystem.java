@@ -50,14 +50,20 @@ public class CustomerSystem {
 
     public synchronized Customer getCustomerById(Integer id) {
         return customers.stream()
-            .filter(c -> c.getId().equals(id))
+            .filter(c -> {
+                try { return c.getId().equals(id); }
+                catch (NullPointerException npe) { return false; }
+            })
             .findAny().orElse(null);
     }
 
     // TODO: filter without errors if cusomer has null as orderId
     public synchronized Customer getCustomerByOrderId(Integer orderId) {
         return customers.stream()
-            .filter(c -> c.getOrderId().equals(orderId))
+            .filter(c -> {
+                try { return c.getOrderId().equals(orderId); }
+                catch (NullPointerException npe) { return false; }
+            })
             .findAny().orElse(null);
     }
 }

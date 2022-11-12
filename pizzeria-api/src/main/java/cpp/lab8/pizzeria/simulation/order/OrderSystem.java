@@ -26,7 +26,10 @@ public class OrderSystem {
     
     public synchronized Order getOrderById(Integer id) throws NullPointerException {
         return this.orders.stream()
-            .filter(order -> id == order.getId())
+            .filter(order -> {
+                try { return order.getId().equals(id); }
+                catch (NullPointerException npe) { return false; }
+            })
             .findAny().get();
     }
 }
