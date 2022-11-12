@@ -8,15 +8,25 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import cpp.lab8.pizzeria.simulation.PizzeriaManager;
 import cpp.lab8.pizzeria.simulation.DTO.DataTransferManager;
 
 @Component
 public class CustomerSystem {
-    // socket to broadcast modifications
+    // data transer
+    private final DataTransferManager dataTransferManager;
+    // facade object access
+    private final PizzeriaManager pizzaManager;
+
     @Autowired
-    private DataTransferManager dtm;
+    public CustomerSystem(@Lazy PizzeriaManager pizzaManager, 
+                        DataTransferManager dataTransferManager) {
+        this.pizzaManager = pizzaManager;
+        this.dataTransferManager = dataTransferManager;
+    }
 
     // list of customers in the system
     private List<Customer> customers = new ArrayList<>();
@@ -44,7 +54,7 @@ public class CustomerSystem {
         customer = new Customer(++lastCustomer);
         customers.add(customer);
         // notify of the new customer
-        dtm.sendEntity(customer);
+        dataTransferManager.sendEntity(customer);
         return customer;
     }
 
