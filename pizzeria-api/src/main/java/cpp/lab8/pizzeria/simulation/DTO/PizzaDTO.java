@@ -1,6 +1,6 @@
 package cpp.lab8.pizzeria.simulation.DTO;
 
-import cpp.lab8.pizzeria.simulation.order.PizzaState;
+import cpp.lab8.pizzeria.simulation.pizza.PizzaState;
 import lombok.Builder;
 import lombok.Data;
 

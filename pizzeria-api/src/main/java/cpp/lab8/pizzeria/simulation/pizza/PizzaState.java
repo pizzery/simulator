@@ -1,4 +1,4 @@
-package cpp.lab8.pizzeria.simulation.order;
+package cpp.lab8.pizzeria.simulation.pizza;
 
 /**
  * States for each individual pizza
