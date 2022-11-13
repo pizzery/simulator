@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import cpp.lab8.pizzeria.simulation.pizza.Pizza;
+import cpp.lab8.pizzeria.simulation.pizza.PizzaSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -50,6 +52,7 @@ public class DataTransferManager {
         // prepare currently relevant systems
         OrderSystem os = pizzeriaManager.getOrderSystem();
         CustomerSystem cs = pizzeriaManager.getCustomerSystem();
+        PizzaSystem ps = pizzeriaManager.getPizzaSystem();
         // TODO: consider other systems
 
         // get order object from entity to work with it further
@@ -57,6 +60,7 @@ public class DataTransferManager {
         try {
             if (entity instanceof Order) order = (Order)entity;
             else if (entity instanceof Customer) order = os.getOrderById(((Customer)entity).getOrderId());
+            else if (entity instanceof Pizza) order = os.getOrderById(((Pizza)entity).getOrderId());
             // TODO: consider other systems
             else throw new NullPointerException();
         } catch (NullPointerException npe) {
@@ -66,7 +70,15 @@ public class DataTransferManager {
 
         // collect pizzas
         List<PizzaDTO> pizzas = new ArrayList<>();
-        // TODO: build pizza DTO list
+        for (Pizza pizza:
+             ps.getPizzasByOrderId(order.getId())) {
+                PizzaDTO pizzaDTO = PizzaDTO.builder()
+                        .pizzaId(pizza.getPizzaId())
+                        .cookId(pizza.getCookId())
+                        .state(pizza.getState())
+                        .build();
+                pizzas.add(pizzaDTO);
+        }
 
         // get other entities from order
         Customer customer = cs.getCustomerByOrderId(order.getId());

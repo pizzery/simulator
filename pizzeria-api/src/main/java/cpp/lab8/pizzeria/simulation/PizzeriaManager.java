@@ -1,5 +1,7 @@
 package cpp.lab8.pizzeria.simulation;
 
+import cpp.lab8.pizzeria.simulation.order.Order;
+import cpp.lab8.pizzeria.simulation.pizza.PizzaSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -25,11 +27,13 @@ public class PizzeriaManager {
     // all subsystems
     private final CustomerSystem customerSystem;
     private final OrderSystem orderSystem;
+    private final PizzaSystem pizzaSystem;
 
     @Autowired
-    public PizzeriaManager(CustomerSystem cs, OrderSystem os) {
+    public PizzeriaManager(CustomerSystem cs, OrderSystem os,  PizzaSystem ps) {
         customerSystem = cs;
         orderSystem = os;
+        pizzaSystem = ps;
     }
 
     // TODO: start workflow with current configuration

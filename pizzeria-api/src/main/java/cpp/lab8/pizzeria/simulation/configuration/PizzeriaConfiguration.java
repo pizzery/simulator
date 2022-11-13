@@ -19,4 +19,6 @@ public class PizzeriaConfiguration {
     private int minCookingTime;
     // timout for new visitor to come
     private int visitorsTimeout;
+    // strategy to generate clients
+    private int strategy;
 }

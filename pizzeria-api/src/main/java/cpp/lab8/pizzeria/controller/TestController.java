@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cpp.lab8.pizzeria.simulation.DTO.OrderDTO;
 import cpp.lab8.pizzeria.simulation.DTO.PizzaDTO;
 import cpp.lab8.pizzeria.simulation.order.OrderState;
-import cpp.lab8.pizzeria.simulation.order.PizzaState;
+import cpp.lab8.pizzeria.simulation.pizza.PizzaState;
 import cpp.lab8.pizzeria.socket.BroadcastSocket;
 
 @RestController
