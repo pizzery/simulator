@@ -15,7 +15,7 @@ public class MorningStrategy implements ClientGenerator {
     public void generateCustomer(PizzeriaManager pizzaManager) {
         Order order = pizzaManager.getOrderSystem().createOrder();
         Random rnd = new Random();
-        int pizzaCount = rnd.nextInt(1, 2);
+        int pizzaCount = rnd.nextInt(1, 3);
 
         for(int i = 0; i < pizzaCount; i++) {
             pizzaManager

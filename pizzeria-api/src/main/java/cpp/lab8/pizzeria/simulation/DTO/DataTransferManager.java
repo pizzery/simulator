@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import cpp.lab8.pizzeria.simulation.pizza.Pizza;
 import cpp.lab8.pizzeria.simulation.pizza.PizzaSystem;
+import cpp.lab8.pizzeria.simulation.queue.QueueSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -53,6 +54,8 @@ public class DataTransferManager {
         OrderSystem os = pizzeriaManager.getOrderSystem();
         CustomerSystem cs = pizzeriaManager.getCustomerSystem();
         PizzaSystem ps = pizzeriaManager.getPizzaSystem();
+        QueueSystem qs = pizzeriaManager.getQueueSystem();
+
         // TODO: consider other systems
 
         // get order object from entity to work with it further
@@ -88,7 +91,7 @@ public class DataTransferManager {
         OrderDTOBuilder orderBuilder = OrderDTO.builder()
             .orderId(order.getId())
             .customerId(customer == null ? null : customer.getId())
-            .queueId(null)    // TODO: get current queue of pizza using Queue system
+            .queueId(customer == null ? null : qs.getQueueByCustomer(customer).getId())    // TODO: get current queue of pizza using Queue system
             .state(null)        // TODO: get current state of pizza using Cook system
             .pizzas(pizzas);
 

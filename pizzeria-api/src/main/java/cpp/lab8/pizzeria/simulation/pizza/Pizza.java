@@ -20,4 +20,7 @@ public class Pizza {
 
     @NonNull
     private Integer menuItem;
+
+    //to check if pizza was taken by cook
+    private Boolean isTaken;
 }

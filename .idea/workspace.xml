@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="121744c3-5093-4671-9bc2-0c83106bcccc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/pizzeria-api/src/main/java/cpp/lab8/pizzeria/simulation/DTO/DataTransferManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/pizzeria-api/src/main/java/cpp/lab8/pizzeria/simulation/DTO/DataTransferManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pizzeria-api/src/main/java/cpp/lab8/pizzeria/simulation/PizzeriaManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/pizzeria-api/src/main/java/cpp/lab8/pizzeria/simulation/PizzeriaManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pizzeria-api/src/main/java/cpp/lab8/pizzeria/simulation/configuration/PizzeriaConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/pizzeria-api/src/main/java/cpp/lab8/pizzeria/simulation/configuration/PizzeriaConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pizzeria-api/src/main/java/cpp/lab8/pizzeria/simulation/customer/CustomerSystem.java" beforeDir="false" afterPath="$PROJECT_DIR$/pizzeria-api/src/main/java/cpp/lab8/pizzeria/simulation/customer/CustomerSystem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pizzeria-api/src/main/java/cpp/lab8/pizzeria/simulation/customer/generateStrategy/EveningStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/pizzeria-api/src/main/java/cpp/lab8/pizzeria/simulation/customer/generateStrategy/EveningStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pizzeria-api/src/main/java/cpp/lab8/pizzeria/simulation/customer/generateStrategy/MorningStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/pizzeria-api/src/main/java/cpp/lab8/pizzeria/simulation/customer/generateStrategy/MorningStrategy.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2HXh5WoZCsAj6AYdnp1ARQr1hdh" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/University/CPP/Lab8/pizzeria-api"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="121744c3-5093-4671-9bc2-0c83106bcccc" name="Changes" comment="" />
+      <created>1668437153119</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1668437153119</updated>
+      <workItem from="1668437154289" duration="15000" />
+      <workItem from="1668437181879" duration="11000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

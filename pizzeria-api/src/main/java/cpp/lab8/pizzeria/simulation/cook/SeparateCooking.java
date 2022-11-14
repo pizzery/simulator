@@ -1,0 +1,51 @@
+package cpp.lab8.pizzeria.simulation.cook;
+
+import cpp.lab8.pizzeria.simulation.DTO.DataTransferManager;
+import cpp.lab8.pizzeria.simulation.PizzeriaManager;
+import cpp.lab8.pizzeria.simulation.pizza.Pizza;
+import cpp.lab8.pizzeria.simulation.pizza.PizzaState;
+
+import java.util.Random;
+
+public class SeparateCooking {
+    private PizzaState pizzaState;
+
+    public SeparateCooking(PizzaState ps){
+        pizzaState = ps;
+    }
+
+    public void cookingStart(PizzeriaManager pizzeriaManager, int time, DataTransferManager dataTransferManager){
+        while(true){
+            Pizza pizzaToDo = null;
+
+            while(pizzaToDo == null){
+                pizzaToDo = pizzeriaManager.findPizzaToCook(pizzaState);
+            }
+
+            cook(pizzaToDo, time, dataTransferManager);
+
+            pizzaToDo = null;
+        }
+    }
+
+    public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager){
+        System.out.println(
+                pizzaState == PizzaState.DoughMaking ? "Dough making " :
+                pizzaState == PizzaState.Filling ? "Filling " : "Baking "
+                        + pizza.getPizzaId());
+
+        pizza.setState(pizzaState);
+        dataTransferManager.sendEntity(pizza);
+
+        double cookingTime =
+                pizzaState == PizzaState.DoughMaking ? time * 0.3 + (double)new Random().nextInt(5000) :
+                pizzaState == PizzaState.Filling ? time * 0.10 + (double)new Random().nextInt(5000) : time * 0.6 + (double)new Random().nextInt(5000);
+        try {
+            Thread.sleep((int)cookingTime);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        pizza.setIsTaken(false);
+    }
+}

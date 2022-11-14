@@ -60,8 +60,9 @@ public class CustomerSystem {
         Customer customer = null;
         customer = new Customer(++lastCustomer);
         customer.setOrderId(orderID);
-
         customers.add(customer);
+
+        pizzaManager.getQueueSystem().assignCustomerToShortestQueue(customer);
 
         // notify of the new customer
         dataTransferManager.sendEntity(customer);

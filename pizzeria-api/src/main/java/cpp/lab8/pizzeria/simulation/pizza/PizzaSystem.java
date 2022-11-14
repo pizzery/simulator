@@ -2,6 +2,7 @@ package cpp.lab8.pizzeria.simulation.pizza;
 
 import cpp.lab8.pizzeria.simulation.DTO.DataTransferManager;
 import cpp.lab8.pizzeria.simulation.order.Order;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@Data
 public class PizzaSystem {
     @Autowired
     private DataTransferManager dtm;
@@ -21,6 +23,7 @@ public class PizzaSystem {
     public synchronized Pizza createPizza(int menuItem, int orderId) {
         Pizza pizza = new Pizza(++lastPizza, orderId, menuItem);
         pizza.setState(PizzaState.Idle);
+        pizza.setIsTaken(false);
         pizzas.add(pizza);
         return pizza;
     }
