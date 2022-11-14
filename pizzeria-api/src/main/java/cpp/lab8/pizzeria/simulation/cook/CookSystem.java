@@ -34,24 +34,24 @@ public class CookSystem {
             cooks.add(new Cook(i + 1));
             if(strategyType == 0){
                 cooks.get(i).setCookType(CookType.All);
-                AllCookThread cookThread = new AllCookThread(pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager);
+                AllCookThread cookThread = new AllCookThread(i + 1, pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager);
                 cookThread.start();
             }
             else{
                 switch (i%3){
                     case 0:
                         cooks.get(i).setCookType(CookType.DoughMaking);
-                        SeparateCookThread doughCookThread = new SeparateCookThread(pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager, PizzaState.DoughMaking);
+                        SeparateCookThread doughCookThread = new SeparateCookThread(i + 1, pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager, PizzaState.DoughMaking);
                         doughCookThread.start();
                         break;
                     case 1:
                         cooks.get(i).setCookType(CookType.Filling);
-                        SeparateCookThread fillingCookThread = new SeparateCookThread(pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager, PizzaState.Filling);
+                        SeparateCookThread fillingCookThread = new SeparateCookThread(i + 1, pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager, PizzaState.Filling);
                         fillingCookThread.start();
                         break;
                     case 2:
                         cooks.get(i).setCookType(CookType.Baking);
-                        SeparateCookThread bakingCookThread = new SeparateCookThread(pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager, PizzaState.Baking);
+                        SeparateCookThread bakingCookThread = new SeparateCookThread(i + 1, pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager, PizzaState.Baking);
                         bakingCookThread.start();
                         break;
                 }

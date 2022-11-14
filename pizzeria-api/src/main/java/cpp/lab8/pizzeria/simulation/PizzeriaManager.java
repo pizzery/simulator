@@ -59,13 +59,24 @@ public class PizzeriaManager {
     }
 
     public synchronized Pizza findPizzaToCook(PizzaState pizzaState){
-        var result = pizzaSystem.getPizzas().stream().filter(p -> p.getState() == pizzaState && p.getIsTaken() == false).findFirst();
+        Pizza pizza = null;
+
+        for(int i = 0; i < pizzaSystem.getPizzas().size(); i++){
+            if(pizzaSystem.getPizzas().get(i).getState() == pizzaState && pizzaSystem.getPizzas().get(i).getIsTaken() == false){
+                pizza = pizzaSystem.getPizzas().get(i);
+                pizza.setIsTaken(true);
+                break;
+            }
+        }
+
+        /*var result = pizzaSystem.getPizzas().stream().filter(p -> p.getState() == pizzaState && p.getIsTaken() == false).findFirst();
         Pizza pizza = null;
 
         if(result.isPresent()){
             pizza = result.get();
             pizza.setIsTaken(true);
-        }
+        }*/
+
         return pizza;
     }
 }

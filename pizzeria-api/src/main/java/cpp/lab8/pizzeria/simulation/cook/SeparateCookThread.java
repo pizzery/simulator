@@ -5,6 +5,7 @@ import cpp.lab8.pizzeria.simulation.PizzeriaManager;
 import cpp.lab8.pizzeria.simulation.pizza.PizzaState;
 
 public class SeparateCookThread extends Thread {
+    private int Id;
     private int time;
 
     private PizzeriaManager pizzeriaManager;
@@ -13,16 +14,17 @@ public class SeparateCookThread extends Thread {
 
     private PizzaState pizzaState;
 
-    public SeparateCookThread(int t, PizzeriaManager pm, DataTransferManager dtm, PizzaState ps) {
+    public SeparateCookThread(int cookId, int t, PizzeriaManager pm, DataTransferManager dtm, PizzaState ps) {
         time = t * 1000;
         pizzeriaManager = pm;
         dataTransferManager = dtm;
         pizzaState = ps;
+        Id = cookId;
     }
 
     @Override
     public void run() {
         System.out.println("thread started " + Thread.currentThread());
-        new SeparateCooking(pizzaState).cookingStart(pizzeriaManager, time, dataTransferManager);
+        new SeparateCooking(pizzaState).cookingStart(pizzeriaManager, time, dataTransferManager, Id);
     }
 }

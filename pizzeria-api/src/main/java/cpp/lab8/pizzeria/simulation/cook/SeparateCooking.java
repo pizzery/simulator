@@ -14,7 +14,7 @@ public class SeparateCooking {
         pizzaState = ps;
     }
 
-    public void cookingStart(PizzeriaManager pizzeriaManager, int time, DataTransferManager dataTransferManager){
+    public void cookingStart(PizzeriaManager pizzeriaManager, int time, DataTransferManager dataTransferManager, int Id){
         while(true){
             Pizza pizzaToDo = null;
 
@@ -22,19 +22,20 @@ public class SeparateCooking {
                 pizzaToDo = pizzeriaManager.findPizzaToCook(pizzaState);
             }
 
-            cook(pizzaToDo, time, dataTransferManager);
+            cook(pizzaToDo, time, dataTransferManager, Id);
 
             pizzaToDo = null;
         }
     }
 
-    public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager){
+    public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager, int Id){
         System.out.println(
                 pizzaState == PizzaState.DoughMaking ? "Dough making " :
                 pizzaState == PizzaState.Filling ? "Filling " : "Baking "
                         + pizza.getPizzaId());
 
         pizza.setState(pizzaState);
+        pizza.setCookId(Id);
         dataTransferManager.sendEntity(pizza);
 
         double cookingTime =
@@ -47,5 +48,6 @@ public class SeparateCooking {
         }
 
         pizza.setIsTaken(false);
+        pizza.setCookId(null);
     }
 }
