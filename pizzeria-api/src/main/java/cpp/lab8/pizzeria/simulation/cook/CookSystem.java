@@ -41,17 +41,17 @@ public class CookSystem {
                 switch (i%3){
                     case 0:
                         cooks.get(i).setCookType(CookType.DoughMaking);
-                        SeparateCookThread doughCookThread = new SeparateCookThread(i + 1, pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager, PizzaState.DoughMaking);
+                        SeparateCookThread doughCookThread = new SeparateCookThread(i + 1, pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager, PizzaState.Idle);
                         doughCookThread.start();
                         break;
                     case 1:
                         cooks.get(i).setCookType(CookType.Filling);
-                        SeparateCookThread fillingCookThread = new SeparateCookThread(i + 1, pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager, PizzaState.Filling);
+                        SeparateCookThread fillingCookThread = new SeparateCookThread(i + 1, pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager, PizzaState.DoughMaking);
                         fillingCookThread.start();
                         break;
                     case 2:
                         cooks.get(i).setCookType(CookType.Baking);
-                        SeparateCookThread bakingCookThread = new SeparateCookThread(i + 1, pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager, PizzaState.Baking);
+                        SeparateCookThread bakingCookThread = new SeparateCookThread(i + 1, pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager, PizzaState.Filling);
                         bakingCookThread.start();
                         break;
                 }

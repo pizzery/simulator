@@ -34,7 +34,7 @@ public class SeparateCooking {
                 pizzaState == PizzaState.Filling ? "Filling " : "Baking "
                         + pizza.getPizzaId());
 
-        pizza.setState(pizzaState);
+        pizza.setState(pizzaState == PizzaState.Idle ? PizzaState.DoughMaking : pizzaState == PizzaState.DoughMaking ? PizzaState.Filling : PizzaState.Baking);
         pizza.setCookId(Id);
         dataTransferManager.sendEntity(pizza);
 
@@ -45,6 +45,11 @@ public class SeparateCooking {
             Thread.sleep((int)cookingTime);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
+        }
+
+        if(pizza.getState() == PizzaState.Baking){
+            pizza.setState(PizzaState.Done);
+            dataTransferManager.sendEntity(pizza);
         }
 
         pizza.setIsTaken(false);
