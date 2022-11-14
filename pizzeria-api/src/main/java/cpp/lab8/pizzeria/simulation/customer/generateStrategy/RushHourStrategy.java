@@ -1,12 +1,8 @@
 package cpp.lab8.pizzeria.simulation.customer.generateStrategy;
 
 import cpp.lab8.pizzeria.simulation.PizzeriaManager;
-import cpp.lab8.pizzeria.simulation.customer.Customer;
 import cpp.lab8.pizzeria.simulation.order.Order;
-import cpp.lab8.pizzeria.simulation.pizza.Pizza;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class RushHourStrategy implements ClientGenerator {

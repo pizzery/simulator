@@ -2,7 +2,6 @@ package cpp.lab8.pizzeria.simulation.cook;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 
 import cpp.lab8.pizzeria.simulation.DTO.DataTransferManager;

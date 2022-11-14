@@ -11,7 +11,6 @@ import cpp.lab8.pizzeria.simulation.customer.generateStrategy.ClientGenerator;
 import cpp.lab8.pizzeria.simulation.customer.generateStrategy.EveningStrategy;
 import cpp.lab8.pizzeria.simulation.customer.generateStrategy.MorningStrategy;
 import cpp.lab8.pizzeria.simulation.customer.generateStrategy.RushHourStrategy;
-import cpp.lab8.pizzeria.simulation.order.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;

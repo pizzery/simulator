@@ -1,7 +1,6 @@
 package cpp.lab8.pizzeria.simulation.pizza;
 
 import cpp.lab8.pizzeria.simulation.DTO.DataTransferManager;
-import cpp.lab8.pizzeria.simulation.order.Order;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

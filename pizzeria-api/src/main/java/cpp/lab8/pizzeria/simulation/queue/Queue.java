@@ -2,9 +2,7 @@ package cpp.lab8.pizzeria.simulation.queue;
 
 import cpp.lab8.pizzeria.simulation.customer.Customer;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NonNull;
-import lombok.Setter;
 
 import java.util.LinkedList;
 
