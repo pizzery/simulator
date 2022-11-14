@@ -21,6 +21,6 @@ public class PizzeriaConfiguration {
     private int visitorsTimeout;
     // strategy to generate clients
     private int strategy;
-    //strategy to cooks
+    // strategy to cooks
     private int cookStrategy;
 }

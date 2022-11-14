@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import cpp.lab8.pizzeria.simulation.pizza.Pizza;
+import cpp.lab8.pizzeria.simulation.pizza.PizzaState;
 import cpp.lab8.pizzeria.simulation.pizza.PizzaSystem;
 import cpp.lab8.pizzeria.simulation.queue.QueueSystem;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import cpp.lab8.pizzeria.simulation.DTO.OrderDTO.OrderDTOBuilder;
 import cpp.lab8.pizzeria.simulation.customer.Customer;
 import cpp.lab8.pizzeria.simulation.customer.CustomerSystem;
 import cpp.lab8.pizzeria.simulation.order.Order;
+import cpp.lab8.pizzeria.simulation.order.OrderState;
 import cpp.lab8.pizzeria.simulation.order.OrderSystem;
 import cpp.lab8.pizzeria.socket.BroadcastSocket;
 
@@ -40,7 +42,6 @@ public class DataTransferManager {
      */
     public void sendEntity(Object entity) {
         Optional<OrderDTO> dto = prepareDTOFromEntity(entity);
-        System.out.println(dto);
         if (dto.isPresent()) broadcastSocket.broadcast(dto.get());
     }
 
@@ -56,15 +57,12 @@ public class DataTransferManager {
         PizzaSystem ps = pizzeriaManager.getPizzaSystem();
         QueueSystem qs = pizzeriaManager.getQueueSystem();
 
-        // TODO: consider other systems
-
         // get order object from entity to work with it further
         Order order;
         try {
             if (entity instanceof Order) order = (Order)entity;
             else if (entity instanceof Customer) order = os.getOrderById(((Customer)entity).getOrderId());
             else if (entity instanceof Pizza) order = os.getOrderById(((Pizza)entity).getOrderId());
-            // TODO: consider other systems
             else throw new NullPointerException();
         } catch (NullPointerException npe) {
             npe.printStackTrace();
@@ -85,14 +83,24 @@ public class DataTransferManager {
 
         // get other entities from order
         Customer customer = cs.getCustomerByOrderId(order.getId());
-        // TODO: consider other entities
+        OrderState orderState = OrderState.InProgress;
+        boolean idle = true;
+        boolean done = true;
+        for (int i = 0; i < pizzas.size(); i++) {
+            if (!pizzas.get(i).getState().equals(PizzaState.Done))
+                done = false;
+            if (!pizzas.get(i).getState().equals(PizzaState.Idle))
+                idle = false;
+        }
+        if (idle) orderState = OrderState.Idle;
+        else if(done) orderState = OrderState.Done;
 
         // build final object
         OrderDTOBuilder orderBuilder = OrderDTO.builder()
             .orderId(order.getId())
             .customerId(customer == null ? null : customer.getId())
             .queueId(customer == null ? null : qs.getQueueByCustomer(customer).getId())    // TODO: get current queue of pizza using Queue system
-            .state(null)        // TODO: get current state of pizza using Cook system
+            .state(orderState)        // TODO: get current state of pizza using Cook system
             .pizzas(pizzas);
 
         return Optional.of(orderBuilder.build());

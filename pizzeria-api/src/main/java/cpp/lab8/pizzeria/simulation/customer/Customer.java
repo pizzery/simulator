@@ -14,6 +14,4 @@ public class Customer {
 
     // id of the order, attached to customer
     private Integer orderId;
-
-    // TODO: other customer properties
 }
