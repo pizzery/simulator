@@ -1,7 +1,6 @@
 package cpp.lab8.pizzeria.simulation;
 
 import cpp.lab8.pizzeria.simulation.cook.CookSystem;
-import cpp.lab8.pizzeria.simulation.order.Order;
 import cpp.lab8.pizzeria.simulation.pizza.Pizza;
 import cpp.lab8.pizzeria.simulation.pizza.PizzaState;
 import cpp.lab8.pizzeria.simulation.pizza.PizzaSystem;

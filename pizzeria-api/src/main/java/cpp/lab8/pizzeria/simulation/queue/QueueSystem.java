@@ -3,20 +3,11 @@ package cpp.lab8.pizzeria.simulation.queue;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import cpp.lab8.pizzeria.simulation.DTO.DataTransferManager;
 import cpp.lab8.pizzeria.simulation.customer.Customer;
-import cpp.lab8.pizzeria.simulation.pizza.Pizza;
-import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import cpp.lab8.pizzeria.socket.BroadcastSocket;
 
 @Component
 public class QueueSystem {
-    @Autowired
-    private DataTransferManager dtm;
-
     // list of queues in the system
     private List<Queue> queues;
 
@@ -37,7 +28,7 @@ public class QueueSystem {
     public Queue getShortestQueue() {
         int minSize = queues.stream().min(Comparator.comparingInt(q -> q.getCustomersInQueue().size())).get().getCustomersInQueue().size();
         List<Queue> minQueues = queues.stream().filter(q -> q.getCustomersInQueue().size() == minSize).collect(Collectors.toList());
-        return minQueues.get(new Random().nextInt(0, minQueues.size()));
+        return minQueues.get(new Random().nextInt(minQueues.size()));
     }
 
     public synchronized Queue getQueueByCustomer(Customer customer) throws NullPointerException {
