@@ -5,11 +5,15 @@ import cpp.lab8.pizzeria.simulation.pizza.Pizza;
 import cpp.lab8.pizzeria.simulation.pizza.PizzaState;
 import cpp.lab8.pizzeria.simulation.pizza.PizzaSystem;
 import cpp.lab8.pizzeria.simulation.queue.QueueSystem;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import cpp.lab8.pizzeria.simulation.configuration.PizzeriaConfiguration;
+import cpp.lab8.pizzeria.simulation.customer.Customer;
 import cpp.lab8.pizzeria.simulation.customer.CustomerSystem;
 import cpp.lab8.pizzeria.simulation.order.OrderSystem;
 import lombok.Getter;
@@ -42,12 +46,12 @@ public class PizzeriaManager {
         queueSystem = qs;
     }
 
-    // TODO: start workflow with current configuration
+    // start workflow with current configuration
     public void start() {
         customerSystem.startGeneration(configuration.getVisitorsTimeout());
         queueSystem.createQueues(configuration.getCashRegisters());
 
-        //Sleep to wait for pizza creation
+        // sleep to wait for pizza creation
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -57,24 +61,23 @@ public class PizzeriaManager {
         cookSystem.createCooks(configuration.getCooks(), configuration.getCookStrategy());
     }
 
+    public synchronized void chooseQueue(Customer customer) {
+        queueSystem.assignCustomerToShortestQueue(customer);
+    }
+
     public synchronized Pizza findPizzaToCook(PizzaState pizzaState){
         Pizza pizza = null;
-
-        for(int i = 0; i < pizzaSystem.getPizzas().size(); i++){
-            if(pizzaSystem.getPizzas().get(i).getState() == pizzaState && pizzaSystem.getPizzas().get(i).getIsTaken() == false){
-                pizza = pizzaSystem.getPizzas().get(i);
+        
+        List<Pizza> allPizzas = pizzaSystem.getPizzas();
+        Pizza currentPizza;
+        for(int i = 0; i < allPizzas.size(); i++) {
+            currentPizza = allPizzas.get(i);
+            if(currentPizza.getState() == pizzaState && !currentPizza.getIsTaken()){
+                pizza = allPizzas.get(i);
                 pizza.setIsTaken(true);
                 break;
             }
         }
-
-        /*var result = pizzaSystem.getPizzas().stream().filter(p -> p.getState() == pizzaState && p.getIsTaken() == false).findFirst();
-        Pizza pizza = null;
-
-        if(result.isPresent()){
-            pizza = result.get();
-            pizza.setIsTaken(true);
-        }*/
 
         return pizza;
     }

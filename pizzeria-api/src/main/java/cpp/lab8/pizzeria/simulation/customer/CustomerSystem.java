@@ -24,7 +24,7 @@ public class CustomerSystem {
     private final DataTransferManager dataTransferManager;
     // facade object access
     private final PizzeriaManager pizzaManager;
-    //strategy for generating clients
+    // strategy for generating clients
     private ClientGenerator clientGenerator;
 
     @Autowired
@@ -53,16 +53,14 @@ public class CustomerSystem {
 
     /**
      * Factory method for customer generation
-     * TODO: full customer generation
      */
     public synchronized Customer createCustomer(Integer orderID) {
         Customer customer = null;
         customer = new Customer(++lastCustomer);
         customer.setOrderId(orderID);
         customers.add(customer);
-
-        pizzaManager.getQueueSystem().assignCustomerToShortestQueue(customer);
-
+        // place customer in queue
+        pizzaManager.chooseQueue(customer);
         // notify of the new customer
         dataTransferManager.sendEntity(customer);
         return customer;
@@ -70,11 +68,11 @@ public class CustomerSystem {
 
     public synchronized void generateClients() {
         int strategy = this.pizzaManager.getConfiguration().getStrategy();
-        if (strategy == 1) {
+        if (strategy == 0) {
             this.clientGenerator = new MorningStrategy();
-        } else if (strategy == 2) {
+        } else if (strategy == 1) {
             this.clientGenerator = new RushHourStrategy();
-        } else if (strategy == 3) {
+        } else if (strategy == 2) {
             this.clientGenerator = new EveningStrategy();
         } else {
             this.clientGenerator = new MorningStrategy();
@@ -91,7 +89,6 @@ public class CustomerSystem {
             .findAny().orElse(null);
     }
 
-    // TODO: filter without errors if cusomer has null as orderId
     public synchronized Customer getCustomerByOrderId(Integer orderId) {
         return customers.stream()
             .filter(c -> {

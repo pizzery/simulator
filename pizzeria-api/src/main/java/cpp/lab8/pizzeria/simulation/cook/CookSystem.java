@@ -29,32 +29,43 @@ public class CookSystem {
     private List<Cook> cooks = new ArrayList<>();
 
     public void createCooks(int n, int strategyType) {
+        Thread threadPool[] = new Thread[n];
         for(int i = 0; i < n; i++) {
             cooks.add(new Cook(i + 1));
             if(strategyType == 0){
                 cooks.get(i).setCookType(CookType.All);
-                AllCookThread cookThread = new AllCookThread(i + 1, pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager);
-                cookThread.start();
-            }
-            else{
+                threadPool[i] = new AllCookThread(i + 1, pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager);
+            } else {
                 switch (i%3){
                     case 0:
                         cooks.get(i).setCookType(CookType.DoughMaking);
-                        SeparateCookThread doughCookThread = new SeparateCookThread(i + 1, pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager, PizzaState.DoughMaking);
-                        doughCookThread.start();
+                        threadPool[i] = new SeparateCookThread(i + 1, 
+                            pizzaManager.getConfiguration().getMinCookingTime(), 
+                            pizzaManager, 
+                            dataTransferManager, 
+                            PizzaState.Idle);
                         break;
                     case 1:
                         cooks.get(i).setCookType(CookType.Filling);
-                        SeparateCookThread fillingCookThread = new SeparateCookThread(i + 1, pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager, PizzaState.Filling);
-                        fillingCookThread.start();
+                        threadPool[i] = new SeparateCookThread(i + 1, 
+                            pizzaManager.getConfiguration().getMinCookingTime(), 
+                            pizzaManager, 
+                            dataTransferManager, 
+                            PizzaState.DoughMaking);
                         break;
                     case 2:
                         cooks.get(i).setCookType(CookType.Baking);
-                        SeparateCookThread bakingCookThread = new SeparateCookThread(i + 1, pizzaManager.getConfiguration().getMinCookingTime(), pizzaManager, dataTransferManager, PizzaState.Baking);
-                        bakingCookThread.start();
+                        threadPool[i] = new SeparateCookThread(i + 1, 
+                            pizzaManager.getConfiguration().getMinCookingTime(), 
+                            pizzaManager, 
+                            dataTransferManager, 
+                            PizzaState.Filling);
                         break;
                 }
             }
+        }
+        for (int i = 0; i < n; i++) {
+            threadPool[i].start();
         }
     }
 }

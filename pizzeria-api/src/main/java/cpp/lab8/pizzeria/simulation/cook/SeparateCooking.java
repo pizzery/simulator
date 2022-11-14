@@ -30,11 +30,11 @@ public class SeparateCooking {
 
     public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager, int Id){
         System.out.println(
-                pizzaState == PizzaState.DoughMaking ? "Dough making " :
-                pizzaState == PizzaState.Filling ? "Filling " : "Baking "
-                        + pizza.getPizzaId());
-
-        pizza.setState(pizzaState);
+                (pizzaState == PizzaState.DoughMaking ? "Dough making " :
+                    pizzaState == PizzaState.Filling ? "Filling " : "Baking ") + 
+                pizza.getPizzaId());
+                
+        pizza.setState(PizzaState.next(pizzaState));
         pizza.setCookId(Id);
         dataTransferManager.sendEntity(pizza);
 
@@ -45,6 +45,11 @@ public class SeparateCooking {
             Thread.sleep((int)cookingTime);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
+        }
+
+        if (pizza.getState() == PizzaState.Baking) {
+            pizza.setState(PizzaState.Done);
+            dataTransferManager.sendEntity(pizza);
         }
 
         pizza.setIsTaken(false);
