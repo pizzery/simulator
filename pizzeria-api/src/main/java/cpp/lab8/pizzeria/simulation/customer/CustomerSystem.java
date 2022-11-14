@@ -24,7 +24,7 @@ public class CustomerSystem {
     private final DataTransferManager dataTransferManager;
     // facade object access
     private final PizzeriaManager pizzaManager;
-    //strategy for generating clients
+    // strategy for generating clients
     private ClientGenerator clientGenerator;
 
     @Autowired
@@ -53,16 +53,14 @@ public class CustomerSystem {
 
     /**
      * Factory method for customer generation
-     * TODO: full customer generation
      */
     public synchronized Customer createCustomer(Integer orderID) {
         Customer customer = null;
         customer = new Customer(++lastCustomer);
         customer.setOrderId(orderID);
         customers.add(customer);
-
-        pizzaManager.getQueueSystem().assignCustomerToShortestQueue(customer);
-
+        // place customer in queue
+        pizzaManager.chooseQueue(customer);
         // notify of the new customer
         dataTransferManager.sendEntity(customer);
         return customer;

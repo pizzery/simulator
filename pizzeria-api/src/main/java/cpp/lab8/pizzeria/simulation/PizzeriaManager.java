@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import cpp.lab8.pizzeria.simulation.configuration.PizzeriaConfiguration;
+import cpp.lab8.pizzeria.simulation.customer.Customer;
 import cpp.lab8.pizzeria.simulation.customer.CustomerSystem;
 import cpp.lab8.pizzeria.simulation.order.OrderSystem;
 import lombok.Getter;
@@ -57,21 +58,22 @@ public class PizzeriaManager {
             throw new RuntimeException(e);
         }
 
-        List<Pizza> pizzas = pizzaSystem.getPizzas();
-        for (Pizza pizza : pizzas) {
-            System.out.println(pizza);
-        }
-
         cookSystem.createCooks(configuration.getCooks(), configuration.getCookStrategy());
+    }
+
+    public synchronized void chooseQueue(Customer customer) {
+        queueSystem.assignCustomerToShortestQueue(customer);
     }
 
     public synchronized Pizza findPizzaToCook(PizzaState pizzaState){
         Pizza pizza = null;
+        
         List<Pizza> allPizzas = pizzaSystem.getPizzas();
-
-        for (int i = 0; i < allPizzas.size(); i++){
-            pizza = allPizzas.get(i);
-            if (pizza.getState() == pizzaState && !pizza.getIsTaken()){
+        Pizza currentPizza;
+        for(int i = 0; i < allPizzas.size(); i++) {
+            currentPizza = allPizzas.get(i);
+            if(currentPizza.getState() == pizzaState && !currentPizza.getIsTaken()){
+                pizza = allPizzas.get(i);
                 pizza.setIsTaken(true);
                 break;
             }
