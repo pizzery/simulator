@@ -5,6 +5,9 @@ import cpp.lab8.pizzeria.simulation.pizza.Pizza;
 import cpp.lab8.pizzeria.simulation.pizza.PizzaState;
 import cpp.lab8.pizzeria.simulation.pizza.PizzaSystem;
 import cpp.lab8.pizzeria.simulation.queue.QueueSystem;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -42,16 +45,21 @@ public class PizzeriaManager {
         queueSystem = qs;
     }
 
-    // TODO: start workflow with current configuration
+    // start workflow with current configuration
     public void start() {
         customerSystem.startGeneration(configuration.getVisitorsTimeout());
         queueSystem.createQueues(configuration.getCashRegisters());
 
-        //Sleep to wait for pizza creation
+        // sleep to wait for pizza creation
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
+        }
+
+        List<Pizza> pizzas = pizzaSystem.getPizzas();
+        for (Pizza pizza : pizzas) {
+            System.out.println(pizza);
         }
 
         cookSystem.createCooks(configuration.getCooks(), configuration.getCookStrategy());
@@ -59,22 +67,15 @@ public class PizzeriaManager {
 
     public synchronized Pizza findPizzaToCook(PizzaState pizzaState){
         Pizza pizza = null;
+        List<Pizza> allPizzas = pizzaSystem.getPizzas();
 
-        for(int i = 0; i < pizzaSystem.getPizzas().size(); i++){
-            if(pizzaSystem.getPizzas().get(i).getState() == pizzaState && pizzaSystem.getPizzas().get(i).getIsTaken() == false){
-                pizza = pizzaSystem.getPizzas().get(i);
+        for (int i = 0; i < allPizzas.size(); i++){
+            pizza = allPizzas.get(i);
+            if (pizza.getState() == pizzaState && !pizza.getIsTaken()){
                 pizza.setIsTaken(true);
                 break;
             }
         }
-
-        /*var result = pizzaSystem.getPizzas().stream().filter(p -> p.getState() == pizzaState && p.getIsTaken() == false).findFirst();
-        Pizza pizza = null;
-
-        if(result.isPresent()){
-            pizza = result.get();
-            pizza.setIsTaken(true);
-        }*/
 
         return pizza;
     }

@@ -8,5 +8,14 @@ public enum PizzaState {
 	DoughMaking,
 	Filling,
 	Baking,
-	Done
+	Done;
+
+	public static PizzaState next(PizzaState state) {
+		switch(state) {
+			case Idle: return DoughMaking;
+			case DoughMaking: return Filling;
+			case Filling: return Baking;
+			default: return Done;
+		}
+	}
 }

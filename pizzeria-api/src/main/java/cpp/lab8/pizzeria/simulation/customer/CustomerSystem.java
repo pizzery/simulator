@@ -70,11 +70,11 @@ public class CustomerSystem {
 
     public synchronized void generateClients() {
         int strategy = this.pizzaManager.getConfiguration().getStrategy();
-        if (strategy == 1) {
+        if (strategy == 0) {
             this.clientGenerator = new MorningStrategy();
-        } else if (strategy == 2) {
+        } else if (strategy == 1) {
             this.clientGenerator = new RushHourStrategy();
-        } else if (strategy == 3) {
+        } else if (strategy == 2) {
             this.clientGenerator = new EveningStrategy();
         } else {
             this.clientGenerator = new MorningStrategy();
@@ -91,7 +91,6 @@ public class CustomerSystem {
             .findAny().orElse(null);
     }
 
-    // TODO: filter without errors if cusomer has null as orderId
     public synchronized Customer getCustomerByOrderId(Integer orderId) {
         return customers.stream()
             .filter(c -> {

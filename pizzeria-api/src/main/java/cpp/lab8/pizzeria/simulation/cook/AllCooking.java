@@ -22,12 +22,11 @@ public class AllCooking {
         }
     }
 
-    public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager, int Id){
+    public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager, int Id) {
         System.out.println("Dough making " + pizza.getPizzaId());
         pizza.setState(PizzaState.DoughMaking);
         pizza.setCookId(Id);
         dataTransferManager.sendEntity(pizza);
-
 
         double doughMakingTime = time * 0.3 + (double)new Random().nextInt(5000);
         try {

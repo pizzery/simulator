@@ -3,15 +3,10 @@ package cpp.lab8.pizzeria.simulation.order;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import cpp.lab8.pizzeria.simulation.DTO.DataTransferManager;
 
 @Component
 public class OrderSystem {
-    @Autowired
-    private DataTransferManager dtm;
 
     // list of orders in the system
     private List<Order> orders = new ArrayList<>();
@@ -20,7 +15,6 @@ public class OrderSystem {
     public synchronized Order createOrder() {
         Order order = new Order(++lastOrder);
         orders.add(order);
-        dtm.sendEntity(order);
         return order;
     }
     
