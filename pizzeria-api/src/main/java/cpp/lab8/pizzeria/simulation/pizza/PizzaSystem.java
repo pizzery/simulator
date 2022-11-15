@@ -27,6 +27,11 @@ public class PizzaSystem {
         return pizza;
     }
 
+    public synchronized void clear() {
+        pizzas.clear();
+        lastPizza = 0;
+    }
+
     public synchronized Pizza getPizzaById(Integer id) throws NullPointerException {
         return this.pizzas.stream()
                 .filter(order -> {

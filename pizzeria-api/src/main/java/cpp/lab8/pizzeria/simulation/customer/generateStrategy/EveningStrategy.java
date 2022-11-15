@@ -21,7 +21,5 @@ public class EveningStrategy implements ClientGenerator {
                     );
         }
         pizzaManager.getCustomerSystem().createCustomer(order.getId());
-
-
     }
 }

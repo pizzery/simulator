@@ -12,6 +12,11 @@ public class OrderSystem {
     private List<Order> orders = new ArrayList<>();
     private int lastOrder = 0;
 
+    public synchronized void clear() {
+        orders.clear();
+        lastOrder = 0;
+    }
+
     public synchronized Order createOrder() {
         Order order = new Order(++lastOrder);
         orders.add(order);
