@@ -48,16 +48,8 @@ public class PizzeriaManager {
 
     // start workflow with current configuration
     public void start() {
-        customerSystem.startGeneration(configuration.getVisitorsTimeout());
         queueSystem.createQueues(configuration.getCashRegisters());
-
-        // sleep to wait for pizza creation
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
+        customerSystem.startGeneration(configuration.getVisitorsTimeout());
         cookSystem.createCooks(configuration.getCooks(), configuration.getCookStrategy());
     }
 
