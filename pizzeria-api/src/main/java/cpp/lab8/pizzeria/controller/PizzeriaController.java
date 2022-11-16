@@ -23,13 +23,17 @@ public class PizzeriaController {
 
     @GetMapping("/start")
     public void start() {
-        // TODO: perform checks for configuration before starting
         manager.start();
     }
+
 
     @GetMapping("/logs")
     public void getLogs() {
         // TODO: perform checks for configuration before starting
         manager.getAllRecords();
+
+    @GetMapping("/stop")
+    public void stop() {
+        manager.stop();
     }
 }

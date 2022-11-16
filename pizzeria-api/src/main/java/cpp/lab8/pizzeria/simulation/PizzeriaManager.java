@@ -58,6 +58,16 @@ public class PizzeriaManager {
         cookSystem.createCooks(configuration.getCooks(), configuration.getCookStrategy());
     }
 
+    // stop current simulation
+    public void stop() {
+        customerSystem.stopGeneration();
+        customerSystem.clear();
+        queueSystem.clear();
+        cookSystem.clear();
+        pizzaSystem.clear();
+        orderSystem.clear();
+    }
+
     public synchronized void chooseQueue(Customer customer) {
         queueSystem.assignCustomerToShortestQueue(customer);
     }

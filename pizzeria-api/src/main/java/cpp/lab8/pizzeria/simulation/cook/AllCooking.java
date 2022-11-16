@@ -23,44 +23,37 @@ public class AllCooking {
     }
 
     public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager, int Id, PizzeriaManager pizzeriaManager) {
-        System.out.println("Dough making " + pizza.getPizzaId());
-        pizza.setState(PizzaState.DoughMaking);
-        pizzeriaManager.getLoggerSystem().addLog(pizza.getPizzaId());
-        pizza.setCookId(Id);
-        dataTransferManager.sendEntity(pizza);
-
-        double doughMakingTime = time * 0.3 + (double)new Random().nextInt(5000);
         try {
+            System.out.println("Dough making " + pizza.getPizzaId());
+            pizza.setState(PizzaState.DoughMaking);
+            pizzeriaManager.getLoggerSystem().addLog(pizza.getPizzaId());
+            pizza.setCookId(Id);
+            dataTransferManager.sendEntity(pizza);
+
+            double doughMakingTime = time * 0.3 + (double)new Random().nextInt(5000);
+        
             Thread.sleep((int)doughMakingTime);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 
-        System.out.println("Filling" + pizza.getPizzaId());
-        pizza.setState(PizzaState.Filling);
-        dataTransferManager.sendEntity(pizza);
+            System.out.println("Filling" + pizza.getPizzaId());
+            pizza.setState(PizzaState.Filling);
+            dataTransferManager.sendEntity(pizza);
 
-        double fillingTime = time * 0.10 + (double)new Random().nextInt(5000);
-        try {
+            double fillingTime = time * 0.10 + (double)new Random().nextInt(5000);
             Thread.sleep((int)fillingTime);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
 
-        System.out.println("Baking" + pizza.getPizzaId());
-        pizza.setState(PizzaState.Baking);
-        dataTransferManager.sendEntity(pizza);
+            System.out.println("Baking" + pizza.getPizzaId());
+            pizza.setState(PizzaState.Baking);
+            dataTransferManager.sendEntity(pizza);
 
-        double bakingTime = time * 0.6 + (double)new Random().nextInt(5000);
-        try {
+            double bakingTime = time * 0.6 + (double)new Random().nextInt(5000);
             Thread.sleep((int)bakingTime);
+
+            System.out.println("Pizza Done" + pizza.getPizzaId());
+            pizza.setState(PizzaState.Done);
+            pizzeriaManager.getLoggerSystem().finishPizzaLog(pizza.getPizzaId());
+            dataTransferManager.sendEntity(pizza);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
-        System.out.println("Pizza Done" + pizza.getPizzaId());
-        pizza.setState(PizzaState.Done);
-        pizzeriaManager.getLoggerSystem().finishPizzaLog(pizza.getPizzaId());
-        dataTransferManager.sendEntity(pizza);
     }
 }
