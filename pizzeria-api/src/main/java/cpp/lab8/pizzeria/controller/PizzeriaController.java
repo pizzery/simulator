@@ -26,4 +26,10 @@ public class PizzeriaController {
         // TODO: perform checks for configuration before starting
         manager.start();
     }
+
+    @GetMapping("/logs")
+    public void getLogs() {
+        // TODO: perform checks for configuration before starting
+        manager.getAllRecords();
+    }
 }

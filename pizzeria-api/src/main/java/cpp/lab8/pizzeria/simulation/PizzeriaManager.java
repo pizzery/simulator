@@ -1,6 +1,8 @@
 package cpp.lab8.pizzeria.simulation;
 
 import cpp.lab8.pizzeria.simulation.cook.CookSystem;
+import cpp.lab8.pizzeria.simulation.logger.LogRecord;
+import cpp.lab8.pizzeria.simulation.logger.LoggerSystem;
 import cpp.lab8.pizzeria.simulation.pizza.Pizza;
 import cpp.lab8.pizzeria.simulation.pizza.PizzaState;
 import cpp.lab8.pizzeria.simulation.pizza.PizzaSystem;
@@ -37,13 +39,16 @@ public class PizzeriaManager {
     private final PizzaSystem pizzaSystem;
     private final CookSystem cookSystem;
     private final QueueSystem queueSystem;
+
+    private final LoggerSystem loggerSystem;
     @Autowired
-    public PizzeriaManager(CustomerSystem cs, OrderSystem os,  PizzaSystem ps, CookSystem cks, QueueSystem qs) {
+    public PizzeriaManager(CustomerSystem cs, OrderSystem os,  PizzaSystem ps, CookSystem cks, QueueSystem qs, LoggerSystem ls) {
         customerSystem = cs;
         orderSystem = os;
         pizzaSystem = ps;
         cookSystem = cks;
         queueSystem = qs;
+        loggerSystem = ls;
     }
 
     // start workflow with current configuration
@@ -72,5 +77,9 @@ public class PizzeriaManager {
         }
 
         return pizza;
+    }
+
+    public List<LogRecord> getAllRecords(){
+        return this.loggerSystem.getAllLogs();
     }
 }
