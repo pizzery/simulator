@@ -2,6 +2,8 @@ package cpp.lab8.pizzeria.simulation.customer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -39,16 +41,24 @@ public class CustomerSystem {
     private int lastCustomer = 0;
 
     // timeout generation
-    private ScheduledExecutorService genExecutor;
-    private ScheduledFuture<?> genFuture;
+    // private ScheduledExecutorService genExecutor;
+    // private ScheduledFuture<?> genFuture;
+    Timer timer;
 
     public synchronized void startGeneration(int timeoutSec) {
-        genExecutor = Executors.newScheduledThreadPool(2);
-        genFuture = genExecutor.scheduleAtFixedRate(this::generateClients, 0L, timeoutSec, TimeUnit.SECONDS);
+        // genExecutor = Executors.newScheduledThreadPool(2);
+        // genFuture = genExecutor.scheduleAtFixedRate(this::generateClients, 0L, timeoutSec, TimeUnit.SECONDS);
+        timer = new Timer();
+        timer.schedule(new TimerTask() { 
+            @Override
+            public void run() {
+                generateClients();
+            }
+        }, 0, 1000 * timeoutSec);
     }
 
     public synchronized void stopGeneration() {
-        genFuture.cancel(true);
+        // genFuture.cancel(true);
     }
 
     public synchronized void clear() {
