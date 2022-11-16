@@ -11,6 +11,8 @@ public class AllCookThread extends Thread{
 
     private DataTransferManager dataTransferManager;
 
+    private AllCooking cookingProcess;
+
     public AllCookThread(int cookId, int t, PizzeriaManager pm, DataTransferManager dtm) {
         time = t * 1000;
         pizzeriaManager = pm;
@@ -21,6 +23,7 @@ public class AllCookThread extends Thread{
     @Override
     public void run() {
         System.out.println("thread started " + Thread.currentThread());
-        new AllCooking().cookingStart(pizzeriaManager, time, dataTransferManager, Id);
+        this.cookingProcess = new AllCooking();
+        this.cookingProcess.cookingStart(pizzeriaManager, time, dataTransferManager, Id);
     }
 }

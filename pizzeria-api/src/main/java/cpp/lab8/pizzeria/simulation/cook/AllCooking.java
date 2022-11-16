@@ -16,16 +16,17 @@ public class AllCooking {
                 pizzaToDo = pizzeriaManager.findPizzaToCook(PizzaState.Idle);
             }
 
-            cook(pizzaToDo, time, dataTransferManager, Id);
+            cook(pizzaToDo, time, dataTransferManager, Id, pizzeriaManager);
 
             pizzaToDo = null;
         }
     }
 
-    public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager, int Id) {
+    public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager, int Id, PizzeriaManager pizzeriaManager) {
         try {
             System.out.println("Dough making " + pizza.getPizzaId());
             pizza.setState(PizzaState.DoughMaking);
+            pizzeriaManager.getLoggerSystem().addLog(pizza.getPizzaId());
             pizza.setCookId(Id);
             dataTransferManager.sendEntity(pizza);
 
@@ -48,6 +49,7 @@ public class AllCooking {
 
             System.out.println("Pizza Done" + pizza.getPizzaId());
             pizza.setState(PizzaState.Done);
+            pizzeriaManager.getLoggerSystem().finishPizzaLog(pizza.getPizzaId());
             dataTransferManager.sendEntity(pizza);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
