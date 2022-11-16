@@ -22,7 +22,7 @@ public class SeparateCooking {
                 pizzaToDo = pizzeriaManager.findPizzaToCook(pizzaState);
             }
 
-            cook(pizzaToDo, time, dataTransferManager, Id);
+            cook(pizzaToDo, time, dataTransferManager, Id, pizzeriaManager);
 
             pizzaToDo = null;
             try {
@@ -33,13 +33,16 @@ public class SeparateCooking {
         }
     }
 
-    public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager, int Id){
+    public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager, int Id, PizzeriaManager pizzaManager){
         System.out.println(
                 (pizzaState == PizzaState.DoughMaking ? "Dough making " :
                     pizzaState == PizzaState.Filling ? "Filling " : "Baking ") + 
                 pizza.getPizzaId());
                 
         pizza.setState(PizzaState.next(pizzaState));
+        if(pizza.getState() == PizzaState.DoughMaking){
+            pizzaManager.getLoggerSystem().addLog(pizza.getPizzaId());
+        }
         pizza.setCookId(Id);
         dataTransferManager.sendEntity(pizza);
 
@@ -54,6 +57,7 @@ public class SeparateCooking {
 
         if (pizza.getState() == PizzaState.Baking) {
             pizza.setState(PizzaState.Done);
+            pizzaManager.getLoggerSystem().finishPizzaLog(pizza.getPizzaId());
             dataTransferManager.sendEntity(pizza);
         }
 
