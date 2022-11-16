@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
+// import java.util.concurrent.Executors;
+// import java.util.concurrent.ScheduledExecutorService;
+// import java.util.concurrent.ScheduledFuture;
+// import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -45,13 +45,15 @@ public class CustomerSystem {
         timer.schedule(new TimerTask() { 
             @Override
             public void run() {
-                generateClients();
+                pizzaManager.generateCustomer();
             }
         }, 0, 1000 * timeoutSec);
     }
 
     public synchronized void stopGeneration() {
         // genFuture.cancel(true);
+        timer.cancel();
+        timer.purge();
     }
 
     public synchronized void clear() {
