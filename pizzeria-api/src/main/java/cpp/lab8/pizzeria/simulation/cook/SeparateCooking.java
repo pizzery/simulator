@@ -25,6 +25,11 @@ public class SeparateCooking {
             cook(pizzaToDo, time, dataTransferManager, Id);
 
             pizzaToDo = null;
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
