@@ -14,6 +14,8 @@ public class SeparateCookThread extends Thread {
 
     private PizzaState pizzaState;
 
+    private SeparateCooking cookingProcess;
+
     public SeparateCookThread(int cookId, int t, PizzeriaManager pm, DataTransferManager dtm, PizzaState ps) {
         time = t * 1000;
         pizzeriaManager = pm;
@@ -25,6 +27,7 @@ public class SeparateCookThread extends Thread {
     @Override
     public void run() {
         System.out.println("thread started " + Thread.currentThread());
-        new SeparateCooking(pizzaState).cookingStart(pizzeriaManager, time, dataTransferManager, Id);
+        this.cookingProcess = new SeparateCooking(pizzaState);
+        this.cookingProcess.cookingStart(pizzeriaManager, time, dataTransferManager, Id);
     }
 }
