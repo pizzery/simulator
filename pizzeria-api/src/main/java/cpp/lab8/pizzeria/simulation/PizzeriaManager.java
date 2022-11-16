@@ -50,7 +50,7 @@ public class PizzeriaManager {
 
         //Sleep to wait for pizza creation
         try {
-            Thread.sleep(5000);
+            Thread.sleep(3000*configuration.getCooks());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

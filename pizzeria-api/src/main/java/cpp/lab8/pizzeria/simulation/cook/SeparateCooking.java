@@ -25,6 +25,15 @@ public class SeparateCooking {
             cook(pizzaToDo, time, dataTransferManager, Id);
 
             pizzaToDo = null;
+
+            if (new Random().nextInt(3) == 0) {
+                try {
+                    Thread.sleep(new Random().nextInt(7000));
+                    System.out.println("Cook on pause!");
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 
