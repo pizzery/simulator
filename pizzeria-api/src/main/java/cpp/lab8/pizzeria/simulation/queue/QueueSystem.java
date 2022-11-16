@@ -20,6 +20,10 @@ public class QueueSystem {
         }
     }
 
+    public synchronized void clear() {
+        this.queues.clear();
+    }
+
     public void assignCustomerToShortestQueue(Customer customer) {
         Queue queue = getShortestQueue();
         queue.getCustomersInQueue().add(customer);

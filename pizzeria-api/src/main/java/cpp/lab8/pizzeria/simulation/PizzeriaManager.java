@@ -81,6 +81,16 @@ public class PizzeriaManager {
     public synchronized void generateCustomer() {
         this.clientGenerator.generateCustomer(this);
     }
+    // stop current simulation
+    public void stop() {
+        customerSystem.stopGeneration();
+        customerSystem.clear();
+        queueSystem.clear();
+        cookSystem.clear();
+        pizzaSystem.clear();
+        orderSystem.clear();
+    }
+
     public synchronized void chooseQueue(Customer customer) {
         queueSystem.assignCustomerToShortestQueue(customer);
     }

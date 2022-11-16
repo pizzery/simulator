@@ -44,6 +44,11 @@ public class CustomerSystem {
         genFuture.cancel(true);
     }
 
+    public synchronized void clear() {
+        this.customers.clear();
+        lastCustomer = 0;
+    }
+
     // Factory method for customer generation
     public synchronized Customer createCustomer(Integer orderID) {
         Customer customer = null;
