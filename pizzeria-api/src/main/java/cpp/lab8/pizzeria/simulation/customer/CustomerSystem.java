@@ -8,11 +8,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-
-import cpp.lab8.pizzeria.simulation.customer.generateStrategy.ClientGenerator;
-import cpp.lab8.pizzeria.simulation.customer.generateStrategy.EveningStrategy;
-import cpp.lab8.pizzeria.simulation.customer.generateStrategy.MorningStrategy;
-import cpp.lab8.pizzeria.simulation.customer.generateStrategy.RushHourStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
@@ -26,8 +21,6 @@ public class CustomerSystem {
     private final DataTransferManager dataTransferManager;
     // facade object access
     private final PizzeriaManager pizzaManager;
-    // strategy for generating clients
-    private ClientGenerator clientGenerator;
 
     @Autowired
     public CustomerSystem(@Lazy PizzeriaManager pizzaManager,
@@ -66,9 +59,7 @@ public class CustomerSystem {
         lastCustomer = 0;
     }
 
-    /**
-     * Factory method for customer generation
-     */
+    // Factory method for customer generation
     public synchronized Customer createCustomer(Integer orderID) {
         Customer customer = null;
         customer = new Customer(++lastCustomer);
@@ -79,20 +70,6 @@ public class CustomerSystem {
         // notify of the new customer
         dataTransferManager.sendEntity(customer);
         return customer;
-    }
-
-    public synchronized void generateClients() {
-        int strategy = this.pizzaManager.getConfiguration().getStrategy();
-        if (strategy == 0) {
-            this.clientGenerator = new MorningStrategy();
-        } else if (strategy == 1) {
-            this.clientGenerator = new RushHourStrategy();
-        } else if (strategy == 2) {
-            this.clientGenerator = new EveningStrategy();
-        } else {
-            this.clientGenerator = new MorningStrategy();
-        }
-        this.clientGenerator.generateCustomer(this.pizzaManager);
     }
 
     public synchronized Customer getCustomerById(Integer id) {
