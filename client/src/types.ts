@@ -25,3 +25,6 @@ interface Order {
 	pizzas: Pizza[],
 	state: OrderState,
 }
+
+export type {Pizza, Order};
+export {OrderState, PizzaState};
