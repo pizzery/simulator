@@ -1,11 +1,14 @@
 interface Props {
 	children: React.ReactNode;
 	title: string;
+	className?: string;
 }
 
-const Section = ({children, title}: Props) => {
+const Section = ({children, title, className}: Props) => {
 	return (
-		<div className='h-full p-2 flex flex-col bg-slate-600 rounded-2xl'>
+		<div className={
+			`h-full p-2 flex flex-col bg-slate-600 rounded-2xl ${className}`
+		}>
 			<h2 className='
 				mx-auto mb-2 text-2xl text-slate-300 font-light tracking-wide
 			'>
