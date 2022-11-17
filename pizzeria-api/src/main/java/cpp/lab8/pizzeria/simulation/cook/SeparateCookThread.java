@@ -5,28 +5,11 @@ import cpp.lab8.pizzeria.simulation.PizzeriaManager;
 import cpp.lab8.pizzeria.simulation.pizza.PizzaState;
 
 public class SeparateCookThread extends CookingThread {
-    private int Id;
-    private int time;
-
-    private PizzeriaManager pizzeriaManager;
-
-    private DataTransferManager dataTransferManager;
-
     private PizzaState pizzaState;
 
-    private SeparateCooking cookingProcess;
-
     public SeparateCookThread(int cookId, int t, PizzeriaManager pm, DataTransferManager dtm, PizzaState ps) {
-        time = t * 1000;
-        pizzeriaManager = pm;
-        dataTransferManager = dtm;
+        super(cookId, t, pm, dtm);
         pizzaState = ps;
-        Id = cookId;
-    }
-
-    @Override
-    public void setActive(boolean active) {
-        this.cookingProcess.setActive(active);
     }
 
     @Override

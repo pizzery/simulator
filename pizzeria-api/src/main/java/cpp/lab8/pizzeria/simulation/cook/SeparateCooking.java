@@ -7,7 +7,7 @@ import cpp.lab8.pizzeria.simulation.pizza.PizzaState;
 
 import java.util.Random;
 
-public class SeparateCooking {
+public class SeparateCooking implements CookingProcess {
     private PizzaState pizzaState;
     private boolean active;
 
@@ -16,7 +16,8 @@ public class SeparateCooking {
         active = true;
     }
 
-    public void cookingStart(PizzeriaManager pizzeriaManager, int time, DataTransferManager dataTransferManager, int Id){
+    @Override
+    public void cookingStart(PizzeriaManager pizzeriaManager, int time, DataTransferManager dataTransferManager, int Id) {
         while(true) {
             try {
                 Thread.sleep(200);
@@ -24,10 +25,10 @@ public class SeparateCooking {
                 e.printStackTrace();
             }
             if (!active) continue;
-            
+
             Pizza pizzaToDo = null;
 
-            while(pizzaToDo == null){
+            while (pizzaToDo == null){
                 pizzaToDo = pizzeriaManager.findPizzaToCook(pizzaState);
             }
 
@@ -37,7 +38,8 @@ public class SeparateCooking {
         }
     }
 
-    public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager, int Id, PizzeriaManager pizzaManager){
+    @Override
+    public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager, int Id, PizzeriaManager pizzaManager) {
         System.out.println(
                 (pizzaState == PizzaState.DoughMaking ? "Dough making " :
                     pizzaState == PizzaState.Filling ? "Filling " : "Baking ") + 
@@ -69,6 +71,7 @@ public class SeparateCooking {
         pizza.setCookId(null);
     }
 
+    @Override
     public void setActive(boolean active) {
         this.active = active;
     }

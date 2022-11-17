@@ -7,13 +7,14 @@ import cpp.lab8.pizzeria.simulation.pizza.PizzaState;
 
 import java.util.Random;
 
-public class AllCooking {
+public class AllCooking implements CookingProcess {
     private boolean active;
 
     public AllCooking() { this.active = true; }
 
+    @Override
     public void cookingStart(PizzeriaManager pizzeriaManager, int time, DataTransferManager dataTransferManager, int Id){
-        while(true){
+        while (true) {
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
@@ -23,7 +24,7 @@ public class AllCooking {
 
             Pizza pizzaToDo = null;
 
-            while(pizzaToDo == null){
+            while (pizzaToDo == null) {
                 pizzaToDo = pizzeriaManager.findPizzaToCook(PizzaState.Idle);
             }
 
@@ -33,6 +34,7 @@ public class AllCooking {
         }
     }
 
+    @Override
     public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager, int Id, PizzeriaManager pizzeriaManager) {
         try {
             System.out.println("Dough making " + pizza.getPizzaId());
@@ -67,6 +69,7 @@ public class AllCooking {
         }
     }
 
+    @Override
     public void setActive(boolean active) {
         this.active = active;
     }
