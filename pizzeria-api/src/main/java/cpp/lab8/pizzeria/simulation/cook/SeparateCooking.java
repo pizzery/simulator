@@ -9,13 +9,22 @@ import java.util.Random;
 
 public class SeparateCooking {
     private PizzaState pizzaState;
+    private boolean active;
 
     public SeparateCooking(PizzaState ps){
         pizzaState = ps;
+        active = true;
     }
 
     public void cookingStart(PizzeriaManager pizzeriaManager, int time, DataTransferManager dataTransferManager, int Id){
-        while(true){
+        while(true) {
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (!active) continue;
+            
             Pizza pizzaToDo = null;
 
             while(pizzaToDo == null){
@@ -25,11 +34,6 @@ public class SeparateCooking {
             cook(pizzaToDo, time, dataTransferManager, Id, pizzeriaManager);
 
             pizzaToDo = null;
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -63,5 +67,9 @@ public class SeparateCooking {
 
         pizza.setIsTaken(false);
         pizza.setCookId(null);
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

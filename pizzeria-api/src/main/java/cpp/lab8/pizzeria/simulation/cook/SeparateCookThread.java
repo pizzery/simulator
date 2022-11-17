@@ -4,7 +4,7 @@ import cpp.lab8.pizzeria.simulation.DTO.DataTransferManager;
 import cpp.lab8.pizzeria.simulation.PizzeriaManager;
 import cpp.lab8.pizzeria.simulation.pizza.PizzaState;
 
-public class SeparateCookThread extends Thread {
+public class SeparateCookThread extends CookingThread {
     private int Id;
     private int time;
 
@@ -22,6 +22,11 @@ public class SeparateCookThread extends Thread {
         dataTransferManager = dtm;
         pizzaState = ps;
         Id = cookId;
+    }
+
+    @Override
+    public void setActive(boolean active) {
+        this.cookingProcess.setActive(active);
     }
 
     @Override

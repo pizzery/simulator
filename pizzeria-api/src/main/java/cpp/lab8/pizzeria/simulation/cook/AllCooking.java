@@ -8,8 +8,19 @@ import cpp.lab8.pizzeria.simulation.pizza.PizzaState;
 import java.util.Random;
 
 public class AllCooking {
+    private boolean active;
+
+    public AllCooking() { this.active = true; }
+
     public void cookingStart(PizzeriaManager pizzeriaManager, int time, DataTransferManager dataTransferManager, int Id){
         while(true){
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (!active) continue;
+
             Pizza pizzaToDo = null;
 
             while(pizzaToDo == null){
@@ -19,12 +30,6 @@ public class AllCooking {
             cook(pizzaToDo, time, dataTransferManager, Id, pizzeriaManager);
 
             pizzaToDo = null;
-            
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -60,5 +65,9 @@ public class AllCooking {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
