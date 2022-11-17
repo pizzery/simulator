@@ -2,11 +2,13 @@ package cpp.lab8.pizzeria.simulation.configuration;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Pizzeria configuration
  */
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class PizzeriaConfiguration {
     // amount of different items available in the menu
