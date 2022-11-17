@@ -7,33 +7,39 @@ import cpp.lab8.pizzeria.simulation.pizza.PizzaState;
 
 import java.util.Random;
 
-public class SeparateCooking {
+public class SeparateCooking implements CookingProcess {
     private PizzaState pizzaState;
+    private boolean active;
 
     public SeparateCooking(PizzaState ps){
         pizzaState = ps;
+        active = true;
     }
 
-    public void cookingStart(PizzeriaManager pizzeriaManager, int time, DataTransferManager dataTransferManager, int Id){
-        while(true){
+    @Override
+    public void cookingStart(PizzeriaManager pizzeriaManager, int time, DataTransferManager dataTransferManager, int Id) {
+        while(true) {
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            if (!active) continue;
+
             Pizza pizzaToDo = null;
 
-            while(pizzaToDo == null){
+            while (pizzaToDo == null){
                 pizzaToDo = pizzeriaManager.findPizzaToCook(pizzaState);
             }
 
             cook(pizzaToDo, time, dataTransferManager, Id, pizzeriaManager);
 
             pizzaToDo = null;
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 
-    public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager, int Id, PizzeriaManager pizzaManager){
+    @Override
+    public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager, int Id, PizzeriaManager pizzaManager) {
         System.out.println(
                 (pizzaState == PizzaState.DoughMaking ? "Dough making " :
                     pizzaState == PizzaState.Filling ? "Filling " : "Baking ") + 
@@ -63,5 +69,10 @@ public class SeparateCooking {
 
         pizza.setIsTaken(false);
         pizza.setCookId(null);
+    }
+
+    @Override
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

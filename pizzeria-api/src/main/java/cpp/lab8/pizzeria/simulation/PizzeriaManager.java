@@ -113,4 +113,12 @@ public class PizzeriaManager {
     public List<LogRecord> getAllRecords(){
         return this.loggerSystem.getAllLogs();
     }
+
+    public void resumeCookingFor(int id) {
+        cookSystem.resumeCook(id);
+    }
+
+    public void suspendCookingFor(int id) {
+        cookSystem.suspendCook(id);
+    }
 }

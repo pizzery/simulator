@@ -28,7 +28,7 @@ public class CookSystem {
     private List<Cook> cooks = new ArrayList<>();
 
     // threads responsible for every cook's work
-    private Thread threadPool[];
+    private CookingThread threadPool[];
 
     public synchronized void clear() {
         this.cooks.clear();
@@ -41,7 +41,7 @@ public class CookSystem {
     public void createCooks(int n, int strategyType) {
         CookType responsibility;
         PizzaState acceptsState;
-        threadPool = new Thread[n];
+        threadPool = new CookingThread[n];
         for(int i = 0; i < n; i++) {
             cooks.add(new Cook(i + 1));
             if(strategyType == 0){
@@ -76,5 +76,13 @@ public class CookSystem {
         for (int i = 0; i < n; i++) {
             threadPool[i].start();
         }
+    }
+
+    public void resumeCook(int id) {
+        this.threadPool[id-1].setActive(true);
+    }
+
+    public void suspendCook(int id) {
+        this.threadPool[id-1].setActive(false);
     }
 }
