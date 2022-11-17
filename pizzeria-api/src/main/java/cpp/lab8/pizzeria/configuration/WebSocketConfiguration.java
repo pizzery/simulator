@@ -19,6 +19,7 @@ public class WebSocketConfiguration implements WebSocketMessageBrokerConfigurer 
   
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/pizzeria-websocket").withSockJS();
+        registry.addEndpoint("/pizzeria-websocket")
+            .setAllowedOriginPatterns("*");
     }
 }
