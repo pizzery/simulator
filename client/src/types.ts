@@ -26,5 +26,19 @@ interface Order {
 	state: OrderState,
 }
 
-export type {Pizza, Order};
+interface PizzaDto {
+	pizzaId: number;
+	cookId: number;
+	state: keyof typeof PizzaState;
+}
+
+interface OrderDto {
+	orderId: number;
+	customerId: number;
+	queueId: number;
+	state: keyof typeof OrderState,
+	pizzas: PizzaDto[];
+}
+
+export type {Pizza, Order, PizzaDto, OrderDto};
 export {OrderState, PizzaState};
