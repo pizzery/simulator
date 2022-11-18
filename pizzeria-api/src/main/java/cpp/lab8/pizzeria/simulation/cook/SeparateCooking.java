@@ -56,11 +56,11 @@ public class SeparateCooking implements CookingProcess {
             System.out.println("Done " + pizza.getPizzaId());
             pizza.setState(PizzaState.Done);
             pizzaManager.getLoggerSystem().finishPizzaLog(pizza.getPizzaId());
-            dataTransferManager.sendEntity(pizza);
         }
 
         pizza.setIsTaken(false);
         pizza.setCookId(null);
+        dataTransferManager.sendEntity(pizza);
     }
 
     @Override

@@ -42,6 +42,13 @@ public class DataTransferManager {
      */
     public void sendEntity(Object entity) {
         Optional<OrderDTO> dto = prepareDTOFromEntity(entity);
+        // if (dto.isPresent()) {
+        //     OrderDTO data = dto.get();
+        //     StringBuilder sb = new StringBuilder("Sending data (order " + data.getOrderId() + "):");
+        //     for (PizzaDTO p : data.getPizzas())
+        //         sb.append("\n\tCook " + p.getCookId() + " - pizza" +  p.getPizzaId() + " " + p.getState().toString());
+        //     System.out.println(sb.toString());
+        // }
         if (dto.isPresent()) broadcastSocket.broadcast(dto.get());
     }
 
@@ -71,11 +78,10 @@ public class DataTransferManager {
 
         // collect pizzas
         List<PizzaDTO> pizzas = new ArrayList<>();
-        for (Pizza pizza:
-             ps.getPizzasByOrderId(order.getId())) {
+        for (Pizza pizza: ps.getPizzasByOrderId(order.getId())) {
                 PizzaDTO pizzaDTO = PizzaDTO.builder()
                         .pizzaId(pizza.getPizzaId())
-                        .cookId(pizza.getCookId())
+                        .cookId(pizza.getIsTaken() ? pizza.getCookId() : null)
                         .state(pizza.getState())
                         .build();
                 pizzas.add(pizzaDTO);
@@ -99,8 +105,8 @@ public class DataTransferManager {
         OrderDTOBuilder orderBuilder = OrderDTO.builder()
             .orderId(order.getId())
             .customerId(customer == null ? null : customer.getId())
-            .queueId(customer == null ? null : qs.getQueueByCustomer(customer).getId())    // TODO: get current queue of pizza using Queue system
-            .state(orderState)        // TODO: get current state of pizza using Cook system
+            .queueId(customer == null ? null : qs.getQueueByCustomer(customer).getId())
+            .state(orderState)
             .pizzas(pizzas);
 
         return Optional.of(orderBuilder.build());
