@@ -6,16 +6,23 @@ interface Props {
 
 const Section = ({children, title, className}: Props) => {
 	return (
-		<div className={
-			`h-full p-2 flex flex-col bg-slate-600 rounded-2xl ${className}`
-		}>
-			<h2 className='
-				mx-auto mb-2 text-2xl text-slate-300 font-light tracking-wide
+		<div className={`
+			relative h-full max-h-full overflow-auto flex flex-col bg-slate-600 
+			rounded-2xl ${className}	
+		`}>
+			<div className='
+				sticky z-10 top-0 pt-2 w-full flex align-center backdrop-blur-2xl
+				bg-slate-600 bg-opacity-30
 			'>
-				{title}
-			</h2>
-			<div className='w-full h-0.5 mb-4 bg-slate-500'/>
-			<div className='flex flex-col gap-2'>
+				<h2 className='
+					top-0 mx-auto mb-2 text-2xl text-slate-300 font-light 
+					tracking-wide
+				'>
+					{title}
+				</h2>
+				<div className='absolute bottom-0 w-full h-0.5 bg-slate-500'/>
+			</div>
+			<div className='flex flex-col gap-2 p-2'>
 				{children}
 			</div>
 		</div>

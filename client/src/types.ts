@@ -40,5 +40,15 @@ interface OrderDto {
 	pizzas: PizzaDto[];
 }
 
-export type {Pizza, Order, PizzaDto, OrderDto};
+interface SystemConfig {
+	menuItems: number;
+	cashRegisters: number;
+	cooks: number;
+	minCookingTime: number;
+	visitorsTimeout: number;
+	strategy: number;
+	cookStrategy: number;
+}
+
+export type {Pizza, Order, PizzaDto, OrderDto, SystemConfig};
 export {OrderState, PizzaState};

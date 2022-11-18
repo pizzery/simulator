@@ -1,0 +1,30 @@
+{
+	"0": {
+		"name": "Pepperoni",
+		"imageSource": "https://i.ibb.co/P9GBC2s/pepperoni.png" 
+	},
+	"1": {
+		"name": "Extra Cheese",
+		"imageSource": "https://i.ibb.co/mDppTK0/extra-cheese.png"
+	},
+	"2": {
+		"name": "Hawaiian",
+		"imageSource": "https://i.ibb.co/vxKX041/hawaiian.png" 
+	},
+	"3": {
+		"name": "Sleek Onion",
+		"imageSource": "https://i.ibb.co/jGyjcNS/sleek-onion.png"
+	},
+	"4": {
+		"name": "Shocking Artichokes",
+		"imageSource": "https://i.ibb.co/myyGSpz/shocking-artichokes.png"
+	},
+	"5": {
+		"name": "Crazy Broccoli",
+		"imageSource": "https://i.ibb.co/vqtX4PG/crazy-broccoli.png"
+	},
+	"6": {
+		"name": "Mushroomy",
+		"imageSource": "https://i.ibb.co/crHbd49/mushroomy.png" 
+	}
+}

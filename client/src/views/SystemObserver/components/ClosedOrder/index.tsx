@@ -1,8 +1,9 @@
 import {DataCell, OrderItem} from './components';
 import {Divider} from 'components';
-import {Pizza, PizzaState} from 'types';
 
-import pizzaImageSource from 'assets/pizzas/1.png';
+import {Pizza} from 'types';
+
+import menuRecord from 'assets/menuRecord.json';
 
 interface Props {
 	number: number;
@@ -11,33 +12,26 @@ interface Props {
 	pizzas: Pizza[];
 }
 
-function getCookNameById(id: number) {
-	return 'John Doe';
+function getMenuItemById(id: number) {
+	return menuRecord[
+		(id % Object.keys(menuRecord).length).toString() as keyof typeof menuRecord
+	];
 }
 
-const Order = ({
+const ClosedOrder = ({
 	number: orderNumber, customerName, cashDeskNumber, pizzas,
 }: Props) => {
-	const a = 3;
-	const renderedPizzas = pizzas.map(({id, cookId, state}) => {
-		const cookName = getCookNameById(cookId);
+	const renderedPizzas = pizzas.map(({id}) => {
+		const {name, imageSource} = getMenuItemById(id);
 
 		return (
 			<OrderItem 
 				key={id}
-				name='Neapolitan'
-				imageSource={pizzaImageSource}
-				state={state}
-				cookName={cookName}
+				name={name}
+				imageSource={imageSource}
 			/>
 		);
 	});
-
-	const closedOrderItems = pizzas.filter(pizza => {
-		return pizza.state === PizzaState.Done;
-	});
-
-	const progressValue = closedOrderItems.length / pizzas.length;
 
 	return (
 		<div className='
@@ -66,17 +60,8 @@ const Order = ({
 			'>
 				{renderedPizzas}
 			</div>
-			<div className='
-				w-full h-2 mt-1 overflow-hidden rounded-full bg-slate-700 flex p-0.5
-				shadow-md
-			'>
-				<div 
-					className='h-full bg-slate-400 rounded-full' 
-					style={{flex: progressValue}}
-				/>
-			</div>
 		</div>
 	);
 };
 
-export default Order;
+export default ClosedOrder;
