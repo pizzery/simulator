@@ -22,45 +22,41 @@ public class AllCooking implements CookingProcess {
             }
             if (!active) continue;
 
-            Pizza pizzaToDo = null;
-
-            while (pizzaToDo == null) {
-                pizzaToDo = pizzeriaManager.findPizzaToCook(PizzaState.Idle);
+            Pizza pizzaToDo = pizzeriaManager.findPizzaToCook(PizzaState.Idle);
+            if (pizzaToDo != null) {
+                cook(pizzaToDo, time, dataTransferManager, Id, pizzeriaManager);
             }
-
-            cook(pizzaToDo, time, dataTransferManager, Id, pizzeriaManager);
-
-            pizzaToDo = null;
         }
     }
 
     @Override
     public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager, int Id, PizzeriaManager pizzeriaManager) {
+        Random random = new Random();
         try {
-            System.out.println("Dough making " + pizza.getPizzaId());
+            System.out.println("DoughMaking " + pizza.getPizzaId());
             pizza.setState(PizzaState.DoughMaking);
             pizzeriaManager.getLoggerSystem().addLog(pizza.getPizzaId());
             pizza.setCookId(Id);
             dataTransferManager.sendEntity(pizza);
 
-            double doughMakingTime = time * 0.3 + (double)new Random().nextInt(5000);
+            double doughMakingTime = time * 0.3 + (double)random.nextInt(5000);
             Thread.sleep((int)doughMakingTime);
 
-            System.out.println("Filling" + pizza.getPizzaId());
+            System.out.println("Filling " + pizza.getPizzaId());
             pizza.setState(PizzaState.Filling);
             dataTransferManager.sendEntity(pizza);
 
-            double fillingTime = time * 0.10 + (double)new Random().nextInt(5000);
+            double fillingTime = time * 0.1 + (double)random.nextInt(5000);
             Thread.sleep((int)fillingTime);
 
-            System.out.println("Baking" + pizza.getPizzaId());
+            System.out.println("Baking " + pizza.getPizzaId());
             pizza.setState(PizzaState.Baking);
             dataTransferManager.sendEntity(pizza);
 
-            double bakingTime = time * 0.6 + (double)new Random().nextInt(5000);
+            double bakingTime = time * 0.6 + (double)random.nextInt(5000);
             Thread.sleep((int)bakingTime);
 
-            System.out.println("Pizza Done" + pizza.getPizzaId());
+            System.out.println("Done " + pizza.getPizzaId());
             pizza.setState(PizzaState.Done);
             pizzeriaManager.getLoggerSystem().finishPizzaLog(pizza.getPizzaId());
             dataTransferManager.sendEntity(pizza);

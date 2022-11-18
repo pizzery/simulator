@@ -68,26 +68,27 @@ public class PizzeriaManager {
         }
 
         // start systems
-        customerSystem.startGeneration(configuration.getVisitorsTimeout());
         queueSystem.createQueues(configuration.getCashRegisters());
         customerSystem.startGeneration(configuration.getVisitorsTimeout());
         cookSystem.createCooks(configuration.getCooks(), configuration.getCookStrategy());
+    }
+
+    // stop current simulation
+    public void stop() {
+        cookSystem.clear();
+        customerSystem.stopGeneration();
+        clientGenerator = null;
+        customerSystem.clear();
+        orderSystem.clear();
+        pizzaSystem.clear();
+        queueSystem.clear();
+        loggerSystem.clear();
     }
 
     // customer related
     public synchronized void generateCustomer() {
         this.clientGenerator.generateCustomer(this);
     }
-    // stop current simulation
-    public void stop() {
-        customerSystem.stopGeneration();
-        customerSystem.clear();
-        queueSystem.clear();
-        cookSystem.clear();
-        pizzaSystem.clear();
-        orderSystem.clear();
-    }
-
     public synchronized void chooseQueue(Customer customer) {
         queueSystem.assignCustomerToShortestQueue(customer);
     }
@@ -101,7 +102,7 @@ public class PizzeriaManager {
         for(int i = 0; i < allPizzas.size(); i++) {
             currentPizza = allPizzas.get(i);
             if(currentPizza.getState() == pizzaState && !currentPizza.getIsTaken()){
-                pizza = allPizzas.get(i);
+                pizza = currentPizza;
                 pizza.setIsTaken(true);
                 break;
             }

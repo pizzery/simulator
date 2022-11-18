@@ -30,4 +30,9 @@ public class LoggerSystem {
             log.get().setFinishedAt(LocalDateTime.now());
         }
     }
+
+    public synchronized void clear() {
+        logRecords.clear();
+        logCount = 0;
+    }
 }

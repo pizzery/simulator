@@ -26,26 +26,17 @@ public class SeparateCooking implements CookingProcess {
             }
             if (!active) continue;
 
-            Pizza pizzaToDo = null;
-
-            while (pizzaToDo == null){
-                pizzaToDo = pizzeriaManager.findPizzaToCook(pizzaState);
+            Pizza pizzaToDo = pizzeriaManager.findPizzaToCook(pizzaState);
+            if (pizzaToDo != null) {
+                cook(pizzaToDo, time, dataTransferManager, Id, pizzeriaManager);
             }
-
-            cook(pizzaToDo, time, dataTransferManager, Id, pizzeriaManager);
-
-            pizzaToDo = null;
         }
     }
 
     @Override
     public void cook(Pizza pizza, int time, DataTransferManager dataTransferManager, int Id, PizzeriaManager pizzaManager) {
-        System.out.println(
-                (pizzaState == PizzaState.DoughMaking ? "Dough making " :
-                    pizzaState == PizzaState.Filling ? "Filling " : "Baking ") + 
-                pizza.getPizzaId());
-                
         pizza.setState(PizzaState.next(pizzaState));
+        System.out.println(pizza.getState().toString() + " " + pizza.getPizzaId());
         if(pizza.getState() == PizzaState.DoughMaking){
             pizzaManager.getLoggerSystem().addLog(pizza.getPizzaId());
         }
@@ -62,6 +53,7 @@ public class SeparateCooking implements CookingProcess {
         }
 
         if (pizza.getState() == PizzaState.Baking) {
+            System.out.println("Done " + pizza.getPizzaId());
             pizza.setState(PizzaState.Done);
             pizzaManager.getLoggerSystem().finishPizzaLog(pizza.getPizzaId());
             dataTransferManager.sendEntity(pizza);
