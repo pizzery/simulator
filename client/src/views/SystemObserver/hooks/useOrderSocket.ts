@@ -29,7 +29,6 @@ function useOrderSocket(messageCallback: OrderMessageCallback) {
 				if (!message.body) return;
 				
 				const orderDto: OrderDto = JSON.parse(message.body);
-				console.log(orderDto);
 				messageCallback(orderDtoToOrder(orderDto));
 			});
 		};

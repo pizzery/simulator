@@ -42,17 +42,17 @@ const Configuration = () => {
 					onValueChange={setMinCookingTime}
 				/>
 				<ConfigItem
-					title='Number of menu items'
+					title='Visitor timeout'
 					value={visitorsTimeout}
 					onValueChange={setVisitorsTimeout}
 				/>
 				<ConfigItem
-					title='Number of menu items'
+					title='Strategy number'
 					value={strategy}
 					onValueChange={setStrategy}
 				/>
 				<ConfigItem
-					title='Number of menu items'
+					title='Cook strategy number'
 					value={cookStrategy}
 					onValueChange={setCookStrategy}
 				/>
@@ -67,8 +67,6 @@ const Configuration = () => {
 							visitorsTimeout,
 							strategy,
 							cookStrategy,
-						}).then(() => {
-							axios.get(`${import.meta.env.VITE_API_URL}/pizzeria/start`);
 						});
 
 						navigate('/system-observer');

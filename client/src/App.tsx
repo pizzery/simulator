@@ -21,9 +21,7 @@ const router = createBrowserRouter([
 				`${import.meta.env.VITE_API_URL}/config/`
 			);
 
-			return redirect(isObject(config) ? 
-				RouterPath.SystemObserver : RouterPath.Configuration
-			);
+			return config;
 		},
 	},
 	{
